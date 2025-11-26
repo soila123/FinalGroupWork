@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactive Binary to Base Ten Converter</title>
+<style>
+  body{
+    font-family: Arial, sans-serif;
+    background:#0d1728;
+    margin:0;
+    padding:30px;
+    color:#e8efff;
+  }
+  h1{
+    text-align:center;
+    margin-bottom:20px;
+  }
+  .container{
+    max-width:800px;
+    margin:0 auto;
+    background:#15233c;
+    padding:20px;
+    border-radius:12px;
+  }
+  input{
+    width:95%;
+    padding:12px;
+    border-radius:8px;
+    border:none;
+    font-size:18px;
+    margin-bottom:15px;
+  }
+  button{
+    padding:10px 15px;
+    margin-right:10px;
+    border:none;
+    background:#4f46e5;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+  }
+  button:hover{
+    background:#4338ca;
+  }
+  .bit-box{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    flex-wrap:wrap;
+  }
+  .bit{
+    width:60px;
+    background:#1d2f4d;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+    font-size:20px;
+    border:2px solid transparent;
+    transition:0.2s;
+  }
+  .bit.active{
+    background:#4f46e5;
+    border-color:white;
+  }
+  .result, .steps{
+    margin-top:20px;
+    padding:15px;
+    background:#1a2c48;
+    border-radius:10px;
+  }
+</style>
+</head>
+<body>
+<h1>Interactive Binary → Base Ten Conversion</h1>
+<div class="container">
+
+  <label>Enter a binary number:</label>
+  <input id="binInput" type="text" placeholder="e.g. 10110" />
+  <br>
+  <button onclick="convert()">Convert</button>
+  <button onclick="randomBin()">Random</button>
+  <button onclick="clearAll()">Clear</button>
+
+  <h3>Bits (click to toggle):</h3>
+  <div id="bitRow" class="bit-box"></div>
+
+  <div class="result" id="result">Decimal: —</div>
+  <div class="steps" id="steps">Steps appear here...</div>
+</div>
+
+<script>
+function renderBits(bin){
+  const bitRow = document.getElementById('bitRow');
+  bitRow.innerHTML = '';
+
+  bin.split('').forEach((b, index) =>{
+    const box = document.createElement('div');
+    box.className = 'bit';
+    box.textContent = b;
+
+    if(b === '1') box.classList.add('active');
+
+    box.onclick = ()=>{
+      let arr = bin.split('');
+      arr[index] = arr[index] === '1' ? '0' : '1';
+      let newBin = arr.join('');
+      document.getElementById('binInput').value = newBin;
+      convert();
+    };
+
+    bitRow.appendChild(box);
+  });
+}
+
+function convert(){
+  let bin = document.getElementById('binInput').value;
+
+  if(!/^[01]+$/.test(bin)){
+    document.getElementById('result').innerHTML = "Enter a valid binary number (0s & 1s only).";
+    document.getElementById('steps').innerHTML = "";
+    return;
+  }
+
+  renderBits(bin);
+
+  let steps = "";
+  let decimal = 0;
+  let reversed = bin.split('').reverse();
+
+  reversed.forEach((bit, i) =>{
+    let place = Math.pow(2, i);
+    let add = bit === '1' ? place : 0;
+    decimal += add;
+
+    steps += `<div>Bit ${bit} × 2^${i} = ${add}</div>`;
+  });
+
+  steps += `<br><strong>Total = ${decimal}</strong>`;
+
+  document.getElementById('result').innerHTML = `Decimal: <strong>${decimal}</strong>`;
+  document.getElementById('steps').innerHTML = steps;
+}
+
+function randomBin(){
+  let length = Math.floor(Math.random()*5)+4;
+  let s = '';
+  for(let i=0;i<length;i++){
+    s += Math.random() > 0.5 ? '1' : '0';
+  }
+  document.getElementById('binInput').value = s;
+  convert();
+}
+
+function clearAll(){
+  document.getElementById('binInput').value = '';
+  document.getElementById('bitRow').innerHTML = '';
+  document.getElementById('result').innerHTML = 'Decimal: —';
+  document.getElementById('steps').innerHTML = 'Steps appear here...';
+}
+</script>
+</body>
+</html>

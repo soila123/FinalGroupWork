@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UB - Fundamentals of Computing</title>
+<style>
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #fff;
+  background-color: #000;
+}
+
+/* Header */
+header {
+position: fixed;
+top: 0;
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 40px;
+background-color: transparent;
+z-index: 1000;
+}
+
+.logo img { width: 180px; }
+
+nav ul {
+list-style: none;
+display: flex;
+gap: 10px;
+margin: 0;
+padding: 0;
+}
+
+/* Shift nav menu 3cm left */
+header nav {
+margin-left: -3cm;
+}
+
+nav ul li a {
+padding: 6px 12px;
+background: transparent;
+color: #fff;
+border: 2px solid #fff;
+border-radius: 5px;
+text-decoration: none;
+font-weight: 600;
+transition: all 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+background: #fff;
+color: #000;
+transform: translateY(-2px);
+}
+
+.icons {
+display: flex;
+gap: 15px;
+font-size: 18px;
+color: #fff;
+margin-left: 20px;
+}
+
+/* Background video */
+.bg-video {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+z-index: -1;
+opacity: 0.8;
+pointer-events: none;
+}
+
+/* Sections */
+section {
+padding: 10px 50px;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+
+section h2 {
+font-size: 2em;
+font-weight: 700;
+color: #fff;
+margin-bottom: 20px;
+}
+
+section p { max-width: 800px; margin: 0 auto 20px; line-height: 1.7; color: #ddd; }
+
+.hero {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding-top: 80px;
+min-height: 80vh;
+}
+
+.hero-text h1 {
+font-size: 42px;
+font-weight: 700;
+letter-spacing: 1px;
+margin: 0 0 10px 0;
+color: #fff;
+text-shadow: none;
+}
+
+.hero-text p {
+font-size: 17px;
+color: #e6f0ff;
+margin: 0;
+}
+
+.projects-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+margin-top: 30px;
+width: 100%;
+max-width: 1000px;
+}
+
+.project-card {
+display: block;
+background: rgba(255,255,255,0.06);
+color: #fff;
+text-decoration: none;
+padding: 20px;
+border-radius: 12px;
+text-align: center;
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 2px 8px rgba(255,255,255,0.04);
+}
+
+.project-card:hover {
+background: rgba(59,122,240,0.12);
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(59,122,240,0.15);
+}
+
+/* Concept Section */
+.concept-gallery {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-auto-rows: 200px;
+gap: 20px;
+padding: 20px 0;
+justify-items: center;
+overflow: hidden;
+}
+
+.concept-card {
+width: 180px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.concept-card h3 {
+margin-bottom: 10px;
+min-height: 2.2em;
+color: #fff;
+text-shadow: none;
+}
+
+.concept-image {
+width: 100%;
+height: 140px;
+object-fit: cover;
+border-radius: 8px;
+border: 2px solid #3b7af0;
+}
+
+/* Team Section */
+.team-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 30px;
+margin-top: 20px;
+max-width: 900px;
+}
+
+.team-member {
+background: rgba(255,255,255,0.06);
+border-radius: 15px;
+text-align: center;
+padding: 20px;
+}
+
+.team-member img {
+width: 85px;
+height: 85px;
+border-radius: 50%;
+object-fit: cover;
+border: 3px solid #3b7af0;
+margin-bottom: 15px;
+}
+
+/* PDF and Video */
+.pdf-container, .video-container {
+width: 100%;
+max-width: 900px;
+margin: 20px auto;
+}
+
+.pdf-container {
+height: 400px;
+overflow: auto;
+background-color: #111;
+padding: 12px;
+border-radius: 6px;
+}
+
+.pdf-container iframe,
+.video-container iframe {
+width: 100%;
+height: 100%;
+border: none;
+border-radius: 10px;
+}
+
+.video-container {
+position: relative;
+padding-bottom: 22.5%;
+height: 0;
+}
+
+.video-container iframe {
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+width: 100%;
+}
+
+/* Music Controls */
+.music-controls {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: rgba(30,63,122,0.6);
+color: white;
+padding: 8px 14px;
+border-radius: 25px;
+font-weight: bold;
+font-size: 13px;
+z-index: 1000;
+}
+
+.music-controls:hover {
+background: rgba(59,122,240,0.8);
+transform: translateY(-2px);
+}
+
+.spacer { height: 80px; }
+
+.doc-link {
+color: #bfe1ff;
+text-decoration: none;
+border-bottom: 1px dashed rgba(191,225,255,0.4);
+}
+
+@media(max-width:1024px){
+.concept-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+}
+@media(max-width:768px){
+section { padding: 80px 20px; }
+.hero-text h1 { font-size: 28px; }
+.hero-text p { font-size: 15px; }
+.logo img { width: 140px; }
+iframe { width: 100%; }
+.concept-gallery { grid-template-columns: 1fr; grid-auto-rows: 180px; }
+} </style>
+
+</head>
+<body>
+
+<!-- Background Video -->
+
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="https://motionbgs.com/media/5599/binary-code-falling.960x540.mp4" type="video/mp4">
+</video>
+
+<!-- Header -->
+
+<header>
+  <div class="logo">
+    <img src="https://www.ubelearn.com/pluginfile.php/1/core_admin/logo/0x200/1737673108/UB_logo_2017%20(2).png" alt="UB Logo">
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#course">Course</a></li>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#concepts">Concepts</a></li>
+      <li><a href="#database">Database</a></li>
+      <li><a href="#documentation">Documentation</a></li>
+      <li><a href="#team">Dev Team</a></li>
+    </ul>
+  </nav>
+  <div class="icons">🔍 👤 🛒</div>
+</header>
+
+<div class="spacer" id="home"></div>
+
+<!-- Hero Section -->
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>FUNDAMENTALS OF COMPUTING</h1>
+    <p>About Course — introduces core computing principles: architecture, software, networks, and data.</p>
+  </div>
+</section>
+
+<!-- Course Section -->
+
+<section id="course">
+  <h2>Course Overview</h2>
+  <p>This course provides students with a solid foundation in the essential principles of Computer Science. It explores key areas such as computer architecture, software development, networking concepts, and data management. Through hands-on activities and theoretical learning, students gain a clear understanding of how computing systems work and how they are applied across modern technology.</p>
+</section>
+
+<!-- Projects Section -->
+
+<section id="project">
+  <h2>Projects</h2>
+  <div class="projects-grid">
+
+    <a href="https://jtzai.github.io/cachememory/" class="project-card">Project 1: Cache Memory</a>
+
+    <a href="https://2025162651-ui.github.io/Binary-to-Hexidecimal-Converter/" class="project-card">Project 2: Binary to Hexadecimal</a>
+
+    <a href="Final%20work/binary_to_decimal.html" class="project-card">Project 3: Binary Notation</a>
+
+
+
+    <a href="https://opstudios-rblx.github.io/Final-Project/concepts.html" class="project-card">Project 4: Two's Complement</a>
+
+    <a href="https://mgts21.github.io/htmlmain/project7.html" class="project-card">Project 5: Machine Language Converter</a>
+
+   <a href="https://jtzai.github.io/html/computerbootprocess.html" class="project-card">Project 6: Computer Boot Process</a>
+
+   <a href="individual.html" class="project-card">Project 7: Individual Links</a>
+
+  </div>
+</section>
+
+<!-- Concepts Section -->
+
+<section id="concepts">
+  <h2>Concepts</h2>
+
+  <div class="concept-gallery">
+    <div class="concept-card">
+      <h3>Basic Data Structures</h3>
+      <a href="https://docs.google.com/presentation/d/1WbLevfyx1ueFGYLBotnq3ohi2eOLmiiHXO9DANBD2II/edit?usp=sharing" target="_blank">
+        <img src="datastructure.png" alt="Data Structures" class="concept-image">
+      </a>
+    </div>
+
+    <div class="concept-card">
+      <h3>Algorithms</h3>
+      <a href="https://www.canva.com/design/DAG4WwP4go4/GhzzkQ4G5lbXZmSRcsz1DQ/edit">
+        <img src="intelligence.PNG" alt="Intelligence Machine" class="concept-image">
+      </a>
+    </div>
+
+    <div class="concept-card">
+      <h3>Database Fundamentals</h3>
+      <a href="https://www.canva.com/design/DAG3sKNi6vw/zSpEc4QoHn5BPS2-516qeQ/edit?ui=eyJEIjp7IlQiOnsiQSI6IlBCdFBHelAxZ1E0bXpscVMifX19">
+        <img src="fundamentals.PNG" alt="Architecture" class="concept-image">
+      </a>
+    </div>
+
+    <div class="concept-card">
+      <h3>3D Graphics</h3>
+      <a href="https://www.canva.com/design/DAG4bRR3OaM/5DxLEHM-HfUQPWcnKEKfaQ/edit">
+        <img src="3d.PNG" alt="Software Development" class="concept-image">
+      </a>
+    </div>
+    <div class="concept-card">
+      <h3>Realtional DataBase</h3>
+      <a href="https://docs.google.com/presentation/d/1kQC-3-uhpxtX_Lf5mEgHFXgEg1W0Oz6E/edit?usp=sharing&ouid=117047751286497311131&rtpof=true&sd=true" target="_blank">
+        <img src="relational.PNG" alt="Networking" class="concept-image">
+      </a>
+    </div>
+    <div class="concept-card">
+      <h3>Deep Dive into AI</h3>
+      <a href="https://docs.google.com/presentation/d/1TdPp5-tQFDDe7gQiFDaiHuTg__Nz6A_i/edit?usp=sharing&ouid=105952546580990597851&rtpof=true&sd=true" target="_blank">
+        <img src="Deep Dive.PNG" alt="Databases" class="concept-image">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Database Section -->
+
+<section id="database">
+  <h2>Database</h2>
+  <p>Watch the demonstration video below:</p>
+  <div class="video-container">
+    <iframe src="https://drive.google.com/file/d/1gL6zYcdEBFgzvh-4iPgwfkvESouDlsbX/view?usp=sharing" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+  </div>
+  <p>Database schema and sample SQL files are available for download: <a class="doc-link" href="#">Download schema</a></p>
+</section>
+
+<!-- Documentation Section -->
+
+<section id="documentation">
+  <h2>Documentation</h2>
+  <p>
+    <a href="jacobs_final_project.pdf.pdf" target="_blank" class="doc-link">
+      Click here to open the documentation in a new tab
+<br><br/>
+      
+<img src="jacobs.PNG" alt="Documentation" class="concept-image" style="width:500px; height:auto;">
+
+</a>.
+    
+  
+</section>
+
+<!-- Courses Section -->
+
+<section id="courses">
+  <h2>Courses</h2>
+  <p>Available modules and syllabus outlines:</p>
+  <div class="projects-grid">
+    <div class="project-card">FUNDAMENTALS OF COMPUTING</div>
+    <div class="project-card">INTRODUCTION TO PROGRAMMING</div>
+    <div class="project-card">DATA STRUCTURES & ALGORITHMS</div>
+    <div class="project-card">COMPUTER ARCHITECTURE</div>
+  </div>
+</section>
+
+<!-- Team Section -->
+
+<section id="team">
+  
+  <div class="team-container">
+    <div class="team-member">
+      <img src="soila.png" alt="Soila Paiz">
+      <h1><a href="https://soila123.github.io/html_2/aboutme.html">Soila</a></h1>
+    </div>
+
+   
+    <div class="team-member">
+  <img src="Kassem.png" alt="Kassem">
+  <h1><a href="https://2025162651-ui.github.io/FoC/indexxxxx.html">Kassem</a></h1>
+</div>
+
+<div class="team-member">
+  <img src="Kira.png" alt="Kira">
+  <h1><a href="https://opstudios-rblx.github.io/html/devTeam.html">Keria</a></h1>
+</div>
+
+<div class="team-member">
+  <img src="Jeremy.png" alt="Jeremy">
+  <h1><a href="https://jtzai.github.io/html/devteam.html">Jeremy</a></h1>
+</div>
+
+<div class="team-member">
+  <img src="Jeremy.png" alt="Jeremy">
+  <h1><a href="https://jtzai.github.io/html/devteam.html">Melany</a></h1>
+</div>
+
+<div class="team-member">
+  <img src="" alt="Jeremy">
+  <h1><a href="https://jtzai.github.io/html/devteam.html">Shermie</a></h1>
+</div>
+
+
+     
+
+</section>
+
+<!-- Background Music -->
+
+<audio id="bg-music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+<button class="music-controls" onclick="toggleMusic()">▶ Play Music</button>
+
+<script>
+const music = document.getElementById("bg-music");
+const button = document.querySelector(".music-controls");
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+    button.textContent = "⏸ Pause Music";
+  } else {
+    music.pause();
+    button.textContent = "▶ Play Music";
+  }
+}
+
+// Smooth nav active link
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav ul li a");
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 120;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+      current = section.getAttribute("id");
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === "#" + current) {
+      link.classList.add("active");
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
